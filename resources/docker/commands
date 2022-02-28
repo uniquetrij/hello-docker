@@ -1,0 +1,17 @@
+export REPO_TAG=;export DOCKERFILE=;export IMAGE_NAME=;
+
+docker build . -f $DOCKERFILE -t $REPO_TAG --no-cache
+
+docker run -d --name $IMAGE_NAME -p 8000:8000 $REPO_TAG
+
+docker exec -it $IMAGE_NAME /bin/bash
+
+docker container stop $IMAGE_NAME
+
+docker rm $(docker stop $(docker ps -a -q --filter name=$IMAGE_NAME --format="{{.ID}}"))
+
+docker rmi $REPO_TAG
+
+docker commit $IMAGE_NAME $REPO_TAG
+
+docker push $REPO_TAG
