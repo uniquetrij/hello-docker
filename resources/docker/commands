@@ -17,3 +17,7 @@ docker rmi $REPO_TAG
 docker commit $IMAGE_NAME $REPO_TAG
 
 docker push $REPO_TAG
+
+docker save $IMAGE_NAME:$VERSION > <filename>.tar
+
+docker load --input <filename>.tar
